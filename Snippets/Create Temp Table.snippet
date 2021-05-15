@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<CodeSnippets  
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">  
+    <CodeSnippet Format="1.0.0">  
+        <Header>  
+            <Title>Create Temp Table</Title>  
+        </Header>  
+        <Snippet>  
+            <Code Language="SQL">  
+                <![CDATA[
+
+drop table if exists #TempTable
+Create table #TempTable 
+(
+	id int identity,-- PRIMARY KEY,
+	Column nvarchar(max),
+	Column varchar(max),
+	Column int
+)
+
+
+				]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

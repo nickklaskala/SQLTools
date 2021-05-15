@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Find Field</Title>
+        </Header>
+        <Snippet>
+            <Code Language="SQL">
+                <![CDATA[
+select
+	s.name as schema_name,
+	t.name as table_name,
+	s.name+'.'+t.name as qualified_table_name
+	c.name as column_name
+from sys.tables as t
+join sys.columns c on c.OBJECT_ID = t.OBJECT_ID
+join sys.schemas s on s.schema_id = t.schema_id
+where 1=1
+and c.name like '%%'
+and t.name like '%%'
+and s.name like '%%'
+order by t.name,c.name
+				]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

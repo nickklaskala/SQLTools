@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<CodeSnippets  
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">  
+    <CodeSnippet Format="1.0.0">  
+        <Header>  
+            <Title>Find Text In whole Database</Title>  
+        </Header>  
+        <Snippet>  
+            <Code Language="SQL">  
+                <![CDATA[
+
+declare @searchText nvarchar(255)='XXXXXXX'--SET SEARCH TEXT <---
+
+IF OBJECT_ID('tempdb..#tables') IS NOT NULL  
+begin
+drop table #tables
+end
+				
+create table #tables(
+id int identity(1,1),
+tablename varchar(max),
+columnname varchar(max),
+xnum  int default 0 )
+
+insert into #tables(tablename,columnname)
+SELECT --*,user_type_id,
+t.name AS table_name,
+c.name AS column_name
+FROM sys.tables AS t
+INNER JOIN sys.columns c ON t.OBJECT_ID = c.OBJECT_ID
+where user_type_id not in(61,106,127,56,48,52,104)
+and schema_id<>5
+--and c.name='recallhours'--231=varchar 61=date
+ORDER BY  t.name;
+
+--select * from sys.types
+
+
+declare @sql varchar(max)=''
+declare @sql2 varchar(max)=''
+
+declare @tablename varchar(max) =''
+declare @columnname varchar(max) =''
+declare @num int = 1
+declare @num2 int = 0
+
+
+while  @num <= (select count(*) from #tables)
+
+	Begin
+		set @tablename = (select tablename from #tables where id = @num) 
+		set @columnname = (select columnname from #tables where id = @num)
+
+		set @sql = ' select cast(['+ @columnname+'] as nvarchar(max)), '+''''+@columnname+','+@tablename+''''+' from '+@tablename +' where cast(['+@columnname +'] as nvarchar(max)) like ' +'''%'+@searchText+'%'''
+
+		--
+
+
+		----
+
+			--set @sql2='update #tables set xnum = ('+' select count(*) from '+@tablename +' where cast(['+@columnname +'] as varchar) like ' +'''%Print to Issue%'''+' where id='+cast(@num as varchar)+')'
+			--exec(@sql2)
+
+		---
+		if @num<(select count(*) from #tables)
+		
+		begin
+			if @num not in (1000,2000,3000,4000,5000)
+			begin
+				set @sql=@sql+'
+				union'
+			end
+		end
+
+		print @sql
+
+		set @num = @num+1
+			
+	END
+
+				]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

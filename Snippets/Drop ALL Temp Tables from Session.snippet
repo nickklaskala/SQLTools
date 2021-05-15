@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>  
+<CodeSnippets  
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">  
+    <CodeSnippet Format="1.0.0">  
+        <Header>  
+            <Title>Drop ALL Temp Tables from Session</Title>  
+        </Header>  
+        <Snippet>  
+            <Code Language="SQL">  
+                <![CDATA[
+
+go
+DECLARE @d_sql NVARCHAR(MAX)=''
+select  @d_sql =@d_sql + 'DROP TABLE ' + QUOTENAME(name) + ';
+' FROM tempdb..sysobjects WHERE name like '#[^#]%' AND OBJECT_ID('tempdb..'+QUOTENAME(name)) IS NOT NULL
+IF @d_sql <> '' BEGIN exec(@d_sql) END 
+go
+
+
+				]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

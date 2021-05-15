@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<CodeSnippets  
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">  
+    <CodeSnippet Format="1.0.0">  
+        <Header>  
+            <Title>Shrink Database</Title>  
+        </Header>  
+        <Snippet>  
+            <Code Language="SQL">  
+                <![CDATA[
+
+USE [DATABASENAME]
+GO
+DBCC SHRINKFILE (N'SURPASS' , 0, TRUNCATEONLY)
+GO
+USE [DATABASENAME]
+GO
+DBCC SHRINKFILE (N'SURPASS_log' , 0, TRUNCATEONLY)
+GO
+USE [DATABASENAME]
+GO
+DBCC SHRINKDATABASE(N'DATABASENAME' )
+GO
+				]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

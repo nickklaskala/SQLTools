@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<CodeSnippets  
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">  
+    <CodeSnippet Format="1.0.0">  
+        <Header>  
+            <Title>SQL Execution Log</Title>  
+        </Header>  
+        <Snippet>  
+            <Code Language="SQL">  
+                <![CDATA[
+SELECT top 100
+	 txt.TEXT AS [SQL Statement]
+	,qs.EXECUTION_COUNT [No. Times Executed]
+	,qs.LAST_EXECUTION_TIME AS [Last Time Executed] 
+	,DB_NAME(txt.dbid) AS [Database]
+FROM SYS.DM_EXEC_QUERY_STATS AS qs
+CROSS APPLY SYS.DM_EXEC_SQL_TEXT(qs.SQL_HANDLE) AS txt
+ORDER BY qs.LAST_EXECUTION_TIME DESC
+
+				]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
